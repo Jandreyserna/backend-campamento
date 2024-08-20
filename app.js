@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 // Usa las rutas importadas
 app.use('/api', routes);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 
 app.listen(port, () => {
    console.log('Servidor Node.js escuchando en el puerto 3000');
