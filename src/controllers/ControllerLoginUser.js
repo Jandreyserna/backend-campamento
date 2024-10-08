@@ -1,33 +1,24 @@
-const ModalRegisterUser = require('../models/modelRegisterUser');
+const modalLoginUser = require('../models/ModelLoginUser');
 require('dotenv').config();
 const MailService = require('../services/mails');
 
-const registerModel = new ModalRegisterUser();
+const LoginModel = new modalLoginUser();
 const mailService = new MailService();
 
-class ControllerRegister {
+class ControllerLoginUser {
     constructor() {}
 
     // Método para registrar un usuario
-    async registerUser(data) {
+    async login_user(data) {
         try {
-            const userData = await this.prepareUserData(data);
-            const tutorData = await this.handleTutorDataIfNeeded(data);
+            const datos = [];
+            datos.username = parseInt(data.username, 10);
+            datos.password = parseInt(data.password, 10);
+            const userloging = await LoginModel.query_user_loging(datos);
 
-            if (await this.isUserRegistered(data.identification)) {
-                return { success: false, message: 'Este usuario ya se encuentra registrado' };
-            }
-
-            const completeUserData = { ...userData, ...this.mapUserData(data), ...tutorData };
-
-            const userState = await registerModel.insertUser(completeUserData);
-            if (userState) {
-                await this.sendRegistrationEmail(completeUserData);
-            }
-
-            return { success: true, data: completeUserData.user_id };
+            return { success: true, data: userloging};
         } catch (error) {
-            return { success: false, message: 'Error al registrar el usuario', error: error.message };
+            return { success: false, message: 'Error al loguear el usuario', error: error.message };
         }
     }
 
@@ -106,4 +97,4 @@ class ControllerRegister {
     }
 }
 
-module.exports = ControllerRegister;
+module.exports = ControllerLoginUser;

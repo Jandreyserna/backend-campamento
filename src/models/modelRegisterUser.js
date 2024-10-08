@@ -118,8 +118,8 @@ class ModelRegister {
         formData.id_tutor, formData.created_at, formData.password
       ];
       
-      const [result] = await this.connection.query(query, values);
-      return result.insertId;
+      await this.connection.query(query, values);
+      return true;
     } catch (error) {
       console.error('Error realizando inserción de usuario:', error);
       throw error;

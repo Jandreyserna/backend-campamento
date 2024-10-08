@@ -10,7 +10,11 @@ routerRegisterUser.post('/submit-form', async (req, res) => {
   const formData = req.body;
   try {
     const response = await registerController.registerUser(formData);
-    res.json({ message: response });
+    if (response.success) {
+      res.json({ message: 'Usuario registrado exitosamente', state: response.success });
+    } else {
+      res.json({ message: response.message, state: response.success })
+    }
   } catch (error) {
     // Manejo de errores si es necesario
     console.error(error);
