@@ -21,5 +21,5 @@ app.use('/api', routes);
 const port = process.env.PORT || 4000;
 
 app.listen(port, () => {
-   console.log('Servidor Node.js escuchando en el puerto 3000');
+   console.log('Servidor Node.js escuchando en el puerto'+' '+port);
   });
