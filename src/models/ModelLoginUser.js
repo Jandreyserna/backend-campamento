@@ -32,7 +32,17 @@ class ModelRegister {
   async query_user_loging(data) {
     await this.connect();
     try {
-      const query = 'SELECT * FROM users WHERE id_identity = ? AND password = ?';
+      const query = `SELECT 
+                        u.user_id, 
+                        u.id_identity,
+                          u.name,
+                          u.last_name,
+                          c.roll,
+                          c.roll_id,
+                          c.status_pass
+                      FROM campamento.users u 
+                      JOIN campamento.capacibility c ON c.id = u.capacibility_id  
+                      WHERE id_identity = ? AND password = ?`;
       const values = [data.username, data.password];
       const [rows] = await this.connection.execute(query, values);
       return rows;
