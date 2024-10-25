@@ -54,6 +54,50 @@ class Mails {
             console.error('Error al enviar el correo:', error);
           }
     }
+
+    async mailWelcomeAllUser(params) {
+        console.log('params:', params);
+        
+        const mailOptions = {
+            from: process.env.MAIL_HOST,
+            to: params.correo,     
+            subject: 'Campamento Dosquebradas 2024',
+            html: `
+            <!DOCTYPE html>
+            <html>
+                <head>
+                    <title>Campamento Dosquebradas 2024</title>
+                </head>
+                <body>
+                    <h1>Registro Exitoso</h1>
+                    <h3>¡Hola ${params.nombre} ${params.apellido}!</h4>
+                    <h5>Gracias por registrarte en el Campamento Dosquebradas 2024.</h5>
+                    <h5>Nos alegra contar contigo, te contamos:</h5>
+                    <h5> Puedes acceder a nuestra plataforma con tu número de identificación terminado en ${params.identificacion} y tu contraseña.
+                    Si es la primera vez que accedes a la plataforma, ten presente que tu contraseña es tu mismo número de identificación. </h5>
+                    <br>
+                    <h5>al acceder a la plataforma podras:</h5>
+                    <ul>
+                        <li>Consultar información del evento</li>
+                        <li>Consultar información de tu inscripción</li>
+                    </ul>
+                    <p>¡Te esperamos en el Campamento del 09 al 11 de Noviembre!</p>
+                    <p>Recuerda venir muy animado y dispuesto.</p>
+                    <p>Atentamente,</p>
+                    <H3>Equipo Campamento Dosquebradas 2024</h3>
+                    <a href="https://campamentodosquebradas.online">https://campamentodosquebradas.online</a>
+                </body>
+            </html>
+        `
+        };
+    
+        try {
+            const info = await this.transporter.sendMail(mailOptions);
+            console.log('Correo enviado:', info.response);
+        } catch (error) {
+            console.error('Error al enviar el correo:', error);
+        }
+    }
 }
 
 module.exports = Mails;

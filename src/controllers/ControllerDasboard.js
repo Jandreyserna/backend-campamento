@@ -27,7 +27,6 @@ class ControllerDasboard {
                     fecha_creado: this.formatDate(camperWithoutPassword.created_at),
                 };
             });
-            console.log('filterdata:', filteredData);
             
             return { success: true, data: filteredData  };
         } catch (error) {
