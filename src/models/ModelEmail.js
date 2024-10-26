@@ -32,8 +32,9 @@ class ModelEmail {
   async getEmailCampers() {
     await this.connect();
     try {
-      const query = 'SELECT user_id, name, last_name, id_identity, email  FROM campamento.users';
+      const query = 'SELECT user_id, name, last_name, id_identity, email  FROM campamento.users cu JOIN campamento.capacibility  cc ON cu.capacibility_id = cc.id WHERE cc.status_email = 0';
       const [rows] = await this.connection.execute(query);
+      
       return rows;
     } catch (error) {
       console.error('Error realizando consulta de correos:', error);

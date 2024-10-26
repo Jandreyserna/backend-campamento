@@ -42,40 +42,39 @@ class ControllerCorreo {
                 {
                     id: 1,
                     identificacion:  123456,
-                    nombre: 'Juan2',
-                    apellido:  'Perez',
-                    correo:  'sofivh1702@gmail.com'
+                    nombre: 'Juan Carlos',
+                    apellido:  'Trejos Ibarra',
+                    correo:  'trejosjuan4@gmail.com'
                 },
                 {
                     id: 2,
                     identificacion: 1088036722,
-                    nombre: 'Jandrey Steven',
-                    apellido: 'Serna Restrepo',
-                    correo: 'jandrey.restrepo@gmail.com'
+                    nombre: 'Jairo Andres',
+                    apellido: 'Lopez',
+                    correo: 'jairofeb2023@gmail.com'
                 },
                 {
-                    id: 3,
-                    identificacion: 1088035847,
-                    nombre: 'Angela Maria',
-                    apellido: 'Valencia Henao',
-                    correo: 'amvh998@gmail.com'
-                },
-                {
-                    id: 4,
-                    identificacion: 42007529,
-                    nombre: 'Luz Estela',
-                    apellido: 'Henao Agudelo',
-                    correo: 'luz.estela.henao68@gmail.com'
-                },
-                {
-                    id: 5,
+                    id: 6,
                     identificacion: 1007212503,
-                    nombre: 'Elizabeth',
-                    apellido: 'Calvo Gómez',
-                    correo: 'elizabeth.calvo@utp.edu.co'
+                    nombre: 'Juan David',
+                    apellido: 'Rubio Suaza',
+                    correo: 'juanrubiodavidsuaza@gmail.com'
+                },
+                {
+                    id: 7,
+                    identificacion: 1007212503,
+                    nombre: 'Adrian',
+                    apellido: 'Rios Rojas',
+                    correo: 'gonsalesnaty6@gmail.com'
+                },
+                {
+                    id: 8,
+                    identificacion: 1007212503,
+                    nombre: 'Esteban',
+                    apellido: 'Ibarra',
+                    correo: 'estebannig21@gmail.com'
                 },
             ];
-            console.log('entre', mails);
             
             mails.forEach(async mail => {
                 await mailService.mailWelcomeAllUser(mail);
