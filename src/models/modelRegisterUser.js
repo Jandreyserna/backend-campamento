@@ -106,8 +106,8 @@ class ModelRegister {
       const query = 'INSERT INTO users (user_id, id_type, id_identity,'+
       ' name, last_name, email, genero, city, congregation,'+
       ' is_congregating, phone_number, birth_date, is_younger,'+
-      ' id_tutor, created_at, password)'+
-      ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+      ' id_tutor, created_at, password, capacibility_id)'+
+      ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
       
       const values = [
         formData.user_id, formData.id_type, formData.id_identity, 
@@ -115,10 +115,18 @@ class ModelRegister {
         formData.genero, formData.city, formData.congregation, 
         formData.is_congregating, formData.phone_number,
         formData.birth_date, formData.is_younger,
-        formData.id_tutor, formData.created_at, formData.password
+        formData.id_tutor, formData.created_at, formData.password, formData.user_id
       ];
       
       await this.connection.query(query, values);
+
+      const query2 = 'INSERT INTO capacibility (id) VALUES (?)';
+      
+      const values2 = [
+        formData.user_id
+      ];
+      
+      await this.connection.query(query2, values2);
       return true;
     } catch (error) {
       console.error('Error realizando inserción de usuario:', error);
@@ -166,6 +174,21 @@ class ModelRegister {
       throw error;
     }finally {
       await this.disconnect()
+    }
+  }
+
+  async updateMailStatus(id) {
+    await this.connect();
+    try {
+        const query = 'UPDATE campamento.capacibility SET status_email = 1 WHERE id = ? ';
+        const values = [id];
+        await this.connection.query(query, values);
+        return true;
+      } catch (error) {
+        console.error('Error realizando actualización de estado de correo:', error);
+        throw error;
+      }finally {
+        await this.disconnect
     }
   }
 }

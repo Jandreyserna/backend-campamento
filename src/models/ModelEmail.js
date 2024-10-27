@@ -43,6 +43,21 @@ class ModelEmail {
       await this.disconnect();
     }
   }
+
+    async updateMailStatus(id) {
+        await this.connect();
+        try {
+            const query = 'UPDATE campamento.capacibility SET status_email = 1 WHERE id = ?';
+            const value = [id];
+            await this.connection.query(query, value);
+            return true;
+        } catch (error) {
+            console.error('Error realizando actualizacion de correos:', error);
+            throw error;
+        }finally {
+            await this.disconnect();
+        }
+    }
 }
 
 module.exports = ModelEmail;

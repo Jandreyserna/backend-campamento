@@ -17,11 +17,15 @@ class ControllerRegister {
             if (await this.isUserRegistered(data.identification)) {
                 return { success: false, message: 'Este usuario ya se encuentra registrado' };
             }
+            if(data.user_id > 160) {
+                return { success: false, message: 'Lo sentimos, no hay mas cupos disponibles' };
+            }
 
             const completeUserData = { ...userData, ...this.mapUserData(data), ...tutorData };
 
             const userState = await registerModel.insertUser(completeUserData);
             if (userState) {
+                await this.UpdateMailStatus(completeUserData.user_id);
                 await this.sendRegistrationEmail(completeUserData);
             }
 
@@ -94,6 +98,11 @@ class ControllerRegister {
         const identity_hidden = '******' + userData.id_identity.slice(6);
         userData.id_identity_hidden = identity_hidden;
         await mailService.mailRegister(userData);
+        await mailService.mailRegisteradmin(userData);
+    }
+
+    async UpdateMailStatus(capacibility_id) {
+        await registerModel.updateMailStatus(capacibility_id);
     }
 
     async identityType() {

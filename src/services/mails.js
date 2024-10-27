@@ -49,14 +49,12 @@ class Mails {
     
           try {
             const info = await this.transporter.sendMail(mailOptions);
-            console.log('Correo enviado:', info.response);
           } catch (error) {
             console.error('Error al enviar el correo:', error);
           }
     }
 
     async mailWelcomeAllUser(params) {
-        console.log('params:', params);
         
         const mailOptions = {
             from: process.env.MAIL_HOST,
@@ -102,10 +100,37 @@ class Mails {
     
         try {
             const info = await this.transporter.sendMail(mailOptions);
-            console.log('Correo enviado:', info.response);
         } catch (error) {
             console.error('Error al enviar el correo:', error);
         }
+    }
+
+    async mailRegisteradmin(params) {
+        const mailOptions = {
+            from: process.env.MAIL_HOST,
+            to: 'jandrey.restrepo@gmail.com',     
+            subject: 'Campamento Dosquebradas 2024',
+            html: `
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Campamento Dosquebradas 2024</title>
+            </head>
+            <body>
+                <h1>Registro Exitoso</h1>
+                <h3>¡Hola Jandrey Te quiero avisar que :  ${params.name} ${params.last_name}!</h4>
+                <h5>se ha inscrtito satisfatoria mente al Campamento Dosquebradas 2024.</h5>
+                <h5>siendo la campista numero: ${params.user_id} </h5>
+            </body>
+            </html>
+        `
+          };
+    
+          try {
+            const info = await this.transporter.sendMail(mailOptions);
+          } catch (error) {
+            console.error('Error al enviar el correo:', error);
+          }
     }
 }
 

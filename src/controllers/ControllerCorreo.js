@@ -24,7 +24,6 @@ class ControllerCorreo {
                     correo: camper.email
                 };
             });
-            console.log('filteredData', filteredData);
             
             if(filteredData.length > 0){
                 const resp = await this.sendEmails(filteredData);
@@ -44,8 +43,8 @@ class ControllerCorreo {
                     identificacion:  123456,
                     nombre: 'Juan Carlos',
                     apellido:  'Trejos Ibarra',
-                    correo:  'trejosjuan4@gmail.com'
-                },
+                    correo:  'jANDREY.RESTREPO@gmail.com'
+                },/* 
                 {
                     id: 2,
                     identificacion: 1088036722,
@@ -73,10 +72,11 @@ class ControllerCorreo {
                     nombre: 'Esteban',
                     apellido: 'Ibarra',
                     correo: 'estebannig21@gmail.com'
-                },
+                }, */
             ];
             
             mails.forEach(async mail => {
+                await EmailModel.updateMailStatus(mail.id);
                 await mailService.mailWelcomeAllUser(mail);
             });
         } catch (error) {
@@ -84,7 +84,6 @@ class ControllerCorreo {
             throw error;
             
         }
-        console.log('Enviando correos');
     }
 }
 
