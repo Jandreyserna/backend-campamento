@@ -35,49 +35,15 @@ class ControllerCorreo {
         }
     }
 
-    async  sendEmails(mailes) {
+    async  sendEmails(mails) {
         try {
-            const mails = [
-                {
-                    id: 1,
-                    identificacion:  123456,
-                    nombre: 'Juan Carlos',
-                    apellido:  'Trejos Ibarra',
-                    correo:  'jANDREY.RESTREPO@gmail.com'
-                },/* 
-                {
-                    id: 2,
-                    identificacion: 1088036722,
-                    nombre: 'Jairo Andres',
-                    apellido: 'Lopez',
-                    correo: 'jairofeb2023@gmail.com'
-                },
-                {
-                    id: 6,
-                    identificacion: 1007212503,
-                    nombre: 'Juan David',
-                    apellido: 'Rubio Suaza',
-                    correo: 'juanrubiodavidsuaza@gmail.com'
-                },
-                {
-                    id: 7,
-                    identificacion: 1007212503,
-                    nombre: 'Adrian',
-                    apellido: 'Rios Rojas',
-                    correo: 'gonsalesnaty6@gmail.com'
-                },
-                {
-                    id: 8,
-                    identificacion: 1007212503,
-                    nombre: 'Esteban',
-                    apellido: 'Ibarra',
-                    correo: 'estebannig21@gmail.com'
-                }, */
-            ];
-            
             mails.forEach(async mail => {
-                await EmailModel.updateMailStatus(mail.id);
-                await mailService.mailWelcomeAllUser(mail);
+                const response = await mailService.mailWelcomeAllUser(mail);
+                console.log('response', response);
+                
+                if(response){
+                    await EmailModel.updateMailStatus(mail.id);
+                }
             });
         } catch (error) {
             console.error('Error enviando correos:', error);
