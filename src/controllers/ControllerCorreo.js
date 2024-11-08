@@ -39,8 +39,6 @@ class ControllerCorreo {
         try {
             mails.forEach(async mail => {
                 const response = await mailService.mailWelcomeAllUser(mail);
-                console.log('response', response);
-                
                 if(response){
                     await EmailModel.updateMailStatus(mail.id);
                 }
@@ -49,6 +47,33 @@ class ControllerCorreo {
             console.error('Error enviando correos:', error);
             throw error;
             
+        }
+    }
+
+    async enviarCorreoCampista(id) {
+        try {
+            const data = await EmailModel.getCorreoCampista(id);
+            if(!data.length){
+                return { success: false, message: 'No se encontró el correo de campista' };
+            }else{
+                if(data[0].status_correo == 0) {
+                    const response = await mailService.correoCristianoCampista(data[0]);
+                    if(!response){
+                        return { success: false, message: 'Error al enviar el correo de campista' };
+                    } else {
+                        const countAfectados = await EmailModel.updateCorreoCampista(id);
+                        if(!countAfectados){
+                            return { success: false, message: 'Error al actualizar el correo de campista' };
+                        }
+                    }
+                }else{
+                    return { success: false, message: 'El correo ya fue enviado' };
+                }
+
+            }     
+            return { success: true, message: 'Correo de campista enviado correctamente' };
+        } catch (error) {
+            return { success: false, message: 'Error al obtener el correo de campista', error: error.message };
         }
     }
 }

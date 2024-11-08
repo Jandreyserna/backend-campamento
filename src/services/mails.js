@@ -94,8 +94,6 @@ class Mails {
     
         try {
             const infoStatus = await this.transporter.sendMail(mailOptions);
-            console.log('Correo enviado:', infoStatus);
-            
             return infoStatus;
         } catch (error) {
             console.error('Error al enviar el correo:', error);
@@ -129,6 +127,57 @@ class Mails {
           } catch (error) {
             console.error('Error al enviar el correo:', error);
           }
+    }
+
+    async correoCristianoCampista(params) {
+        
+        const mailOptions = {
+            from: process.env.MAIL_HOST,
+            to: params.correo,     
+            subject: `Mensaje Especial para ${params.nombre} `,
+    html: `
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <title>Mensaje Especial para ${params.nombre}</title>
+        </head>
+        <body>
+            <h1>Querido/a ${params.nombre},</h1>
+            <p>¡Gracias por ser parte de este campamento y por tu disposición de compartir tiempo con aquellos que están buscando respuestas y sentido para sus vidas! Sabemos que ya conoces a Dios y tienes una relación especial con Él. Puede que algunas cosas durante el campamento no sean nuevas para ti y que, en ocasiones, te sientas un poco fuera de lugar al ver cómo otros actúan o cuando el enfoque es evangelístico. Sin embargo, ¡tú tienes un rol importantísimo aquí!</p>
+            <p>Recuerda que, a través de tu ejemplo y tu forma de actuar, puedes mostrarles a otros la paz, la esperanza y el amor que has encontrado en Cristo. Hay personas aquí que necesitan ver a alguien viviendo la fe de una forma auténtica y genuina. Quizás algunos están pasando por luchas internas, buscando sentido en lugares equivocados, o enfrentándose a vacíos profundos. Tu presencia y tu vida pueden ser ese faro que les indique que hay otro camino, un camino lleno de vida en Jesús.</p>
+            <h3>Aquí te dejamos algunos consejos para este campamento:</h3>
+            <ul>
+                <li><strong>Sé un ejemplo.</strong> Más que predicar con palabras, predica con tu vida. Jesús nos llama a ser luz del mundo y sal de la tierra (Mateo 5:13-16). Con tu actitud, amabilidad y respeto hacia los demás, puedes marcar una gran diferencia.</li>
+                <li><strong>Sé sensible a las necesidades de los demás.</strong> Hay quienes están pasando por situaciones difíciles y no lo expresan abiertamente. Mantente atento a las señales de aquellos que puedan necesitar apoyo, y no dudes en avisar a los líderes si notas algo preocupante.</li>
+                <li><strong>Ora por los demás.</strong> Este campamento puede ser un momento crucial en la vida de muchos. Ora para que Dios toque los corazones y, si tienes oportunidad, invita a alguien a orar contigo.</li>
+                <li><strong>Recuerda que fuiste llamado/a a ser testigo.</strong> Como dice Hechos 1:8, hemos sido llamados a ser testigos de Cristo. Sé un testimonio vivo de su amor, y anímate a compartirlo si surge la oportunidad.</li>
+            </ul>
+            <h3>Versículos para recordar:</h3>
+            <ul>
+                <li>1 Pedro 3:15: "Al contrario, honren en su corazón a Cristo como Señor. Estén siempre preparados para responder a todo el que les pida razón de la esperanza que hay en ustedes, pero háganlo con gentileza y respeto."</li>
+                <li>Mateo 5:16: "Así alumbre vuestra luz delante de los hombres, para que vean vuestras buenas obras, y glorifiquen a vuestro Padre que está en los cielos."</li>
+                <li>1 Timoteo 4:12: "Ninguno tenga en poco tu juventud, sino sé ejemplo de los creyentes en palabra, conducta, amor, espíritu, fe y pureza."</li>
+                <li>Colosenses 4:6: "Sea su conversación siempre con gracia, sazonada con sal, para que sepan cómo responder a cada uno."</li>
+            </ul>
+            <p>Querido/a hermano/a, gracias por ser parte de este campamento. ¡Eres una bendición para muchos y para este lugar! Que Dios te use de gran manera, y recuerda que tu ejemplo puede hacer eco en la vida de alguien para siempre.</p>
+            <p>Con cariño y oración,</p>
+            <h3>Junta organización Campamento Dosquebradas 2024</h3>
+        </body>
+    </html>
+    `
+        };
+    
+        try {
+            const infoStatus = await this.transporter.sendMail(mailOptions);
+            if(infoStatus){
+                return true;
+            }else{
+                return false;
+            }
+        } catch (error) {
+            console.error('Error al enviar el correo:', error);
+            return false;
+        }
     }
 }
 

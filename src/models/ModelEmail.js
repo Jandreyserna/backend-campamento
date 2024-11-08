@@ -58,6 +58,48 @@ class ModelEmail {
             await this.disconnect();
         }
     }
+
+    async getCorreoCampista(id) {
+        await this.connect();
+        try {
+            const query = ` SELECT 
+                                cc.correo_dos AS status_correo, 
+                                CONCAT(cu.name, ' ', cu.last_name) AS nombre, 
+                                cu.email AS correo
+                            FROM 
+                                campamento.correo cc 
+                            INNER JOIN 
+                                campamento.users cu 
+                            ON 
+                                cu.user_id = cc.camper_id 
+                            WHERE 
+                                cc.camper_id = ? `;
+
+            const value = [id];
+            const [rows] = await this.connection.execute(query, value);
+            return rows;
+        } catch (error) {
+            console.error('Error realizando consulta de correos:', error);
+            throw error;
+        }finally {
+            await this.disconnect();
+        }
+    }
+
+    async updateCorreoCampista(id) {
+        await this.connect();
+        try {
+            const query = 'UPDATE campamento.correo SET correo_dos = 1 WHERE id = ?';
+            const value = [id];
+            await this.connection.query(query, value);
+            return true;
+        } catch (error) {
+            console.error('Error realizando actualizacion de correos:', error);
+            throw error;
+        }finally {
+            await this.disconnect();
+        }
+    }
 }
 
 module.exports = ModelEmail;
